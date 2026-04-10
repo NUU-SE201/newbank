@@ -1,0 +1,17 @@
+<h1>Bookings</h1>
+<ul id="booking-list">
+    {% for booking in bookings %}
+        {% if booking.id == my_booking %}
+            <li>
+                <strong>
+                {{ booking.id }} - {{ booking.name }}
+                </strong>
+            </li>
+        {% else %}
+            <li>
+                {{ booking.id }} - {{ booking.name }}
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+<a href="{% url 'booking:add' %}">Book your visit</a>
