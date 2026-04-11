@@ -1,0 +1,8 @@
+<h1>Book your visit</h1>
+<form method="post" action="{% url 'booking:add' %}">
+    {% csrf_token %}
+    <p>
+        <input type="text" name="name" placeholder="Name">
+    </p>
+    <input type="submit" value="Book">
+</form>
