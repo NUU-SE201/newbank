@@ -11,7 +11,7 @@ bookings = [
 # Create your views here.
 def index(request):
     my_booking = request.session.get('my_booking', None)
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.all().order_by('id')
     return render(request,
                 'booking/index.html',
                 {'bookings': bookings,
