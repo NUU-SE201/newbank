@@ -1,28 +1,28 @@
-from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponse, JsonResponse
 
-currencies = {
-    "USD": 1.0,
-    "EUR": 0.85,
-    "GBP": 0.75,
-    "UZS": 12200.0,
-    "JPY": 110.0,
-    "KRW": 1150.0,
+exchange_rates_data = {
+    'usd': 1.0,
+    'eur': 0.92,
+    'gbp': 0.79,
+    'uzs': 12500,
+    'kgs': 89.50,
+    'kzt': 450.00,
 }
 
-# Create your views here.
-def index(request):
-    return render(request, 'currency/index.html', 
-                  {'currencies': currencies})
+def exchange_rates(request):
+    return JsonResponse(exchange_rates_data)
 
 def exchange(request):
-    from_currency = request.GET.get('from', '').upper()
-    to_currency = request.GET.get('to', '').upper()
-    if from_currency not in currencies or to_currency not in currencies:
-        return HttpResponseNotFound("Currency not supported.")
+    from_currency = request.GET.get('from','').lower()
+    to_currency = request.GET.get('to','').lower()
+    amount = float(request.GET.get('amount', 1))
 
-    exchange_rate = currencies[to_currency] / currencies[from_currency]
-    return render(request, 'currency/exchange.html',
-                  {'from': from_currency,
-                   'to': to_currency,
-                   'rate': exchange_rate})
+    if from_currency not in exchange_rates_data or to_currency not in exchange_rates_data:
+        return HttpResponse("Invalid currency code, we don't have it yet")
+    
+    usd_amount = amount / exchange_rates_data[from_currency]    
+    converted = usd_amount * exchange_rates_data[to_currency]
+
+    return HttpResponse(
+        f"{amount} {from_currency.upper()} = {converted:.2f} {to_currency.upper()}"
+    )

@@ -1,21 +1,40 @@
-from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponse
 
-supported_cards = [
-    "Uzcard",
-    "Humo",
-    "Visa",
-    "MasterCard",
-    "UnionPay",
-    "Mir",
-]
+cards_data = {
+    'humo': {
+        'name': 'HUMO',
+        'description': 'Local payment card used in Uzbekistan.'
+    },
+    'uzcard': {
+        'name': 'UzCard',
+        'description': 'Popular local card for daily payments.'
+    },
+    'visa': {
+        'name': 'Visa',
+        'description': 'International payment card.'
+    },
+}
 
-# Create your views here.
-def index(request):
-    return render(request, 'cards/index.html', {'cards': supported_cards})
+def card_list(request):
+    html = """
+    <h1>Plastic Card Types</h1>
+    <ul>
+        <li><a href="/plastic-cards/humo/">HUMO</a></li>
+        <li><a href="/plastic-cards/uzcard/">UzCard</a></li>
+        <li><a href="/plastic-cards/visa/">Visa</a></li>
+    </ul>
+    """
+    return HttpResponse(html)
 
-def card_info(request, card_name):
-    if card_name in supported_cards:
-        return render(request, 'cards/card_info.html', {'card_name': card_name})
-    else:
-        return HttpResponseNotFound("Card not found")
+def card_detail(request, card_name):
+    card = cards_data.get(card_name.lower())
+
+    if not card:
+        return HttpResponse("Card not found")
+
+    html = f"""
+    <h1>{card['name']}</h1>
+    <p>{card['description']}</p>
+    <a href="/plastic-cards/">Back to all cards</a>
+    """
+    return HttpResponse(html)
