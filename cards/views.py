@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound
 
 supported_cards = [
     "Uzcard",
@@ -15,7 +15,4 @@ def index(request):
     return render(request, 'cards/index.html', {'cards': supported_cards})
 
 def card_info(request, card_name):
-    if card_name in supported_cards:
-        return render(request, 'cards/card_info.html', {'card_name': card_name})
-    else:
-        return HttpResponseNotFound("Card not found")
+    return HttpResponse(f'Open {card_name} card at NewBank!')
