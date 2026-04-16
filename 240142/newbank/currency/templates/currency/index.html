@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>NewBank Currencies</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'cards/styles.css' %}">
+    </head>
+    <body>
+        <h1>Currencies of NewBank</h1>
+        <ul>
+            {% for currency, rate in currencies.items %}
+                <li>{{ currency }}: {{ rate }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
