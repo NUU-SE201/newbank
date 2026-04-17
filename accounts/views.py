@@ -4,17 +4,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 # Create your views here.
-def my_account(request, username):
-    user = User.objects.get(username=username)
-    return render(request, 'accounts/my_account.html', {'user': user})
+def my_account(request, username=None):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+    username = request.user.username
+    return render(request, 'accounts/my_account.html', {'user': request.user})
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('accounts:my_account', username=request.user.username)
+        return redirect('accounts:my_account')
     error_message = None
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        if not username or not password:
+            error_message = 'Both fields are required'
+            return render(request, 'accounts/login.html', {'error_message': error_message})
         user = authenticate(request, username=username, password=password)
         if user:
             auth_login(request, user)
@@ -28,7 +33,7 @@ def logout(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('accounts:my_account', username=request.user.username)
+        return redirect('accounts:my_account')
     error_message = None
     if request.method == 'POST':
         username = request.POST['username']
