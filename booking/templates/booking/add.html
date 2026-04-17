@@ -9,6 +9,7 @@
         <div>
             <h1>Book a visit</h1>
             <form method="post">
+                {% csrf_token %}
                 
                 <label for="reason">Reason:</label><br>
                 <input type="text" name="reason" placeholder="Reason"><br><br>

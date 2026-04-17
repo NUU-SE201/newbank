@@ -15,4 +15,7 @@ def index(request):
     return render(request, 'cards/index.html', {'cards': supported_cards})
 
 def card_info(request, card_name):
+    if card_name not in supported_cards:
+        return HttpResponseNotFound(f'Card {card_name} is not supported at NewBank.')
+
     return HttpResponse(f'Open {card_name} card at NewBank!')
