@@ -1,17 +1,20 @@
-<h1>Bookings</h1>
-<ul id="booking-list">
-    {% for booking in bookings %}
-        {% if booking.id == my_booking %}
-            <li>
-                <strong>
-                {{ booking.id }} - {{ booking.name }}
-                </strong>
-            </li>
-        {% else %}
-            <li>
-                {{ booking.id }} - {{ booking.name }}
-            </li>
-        {% endif %}
-    {% endfor %}
-</ul>
-<a href="{% url 'booking:add' %}">Book your visit</a>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bookings</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'booking/styles.css' %}">
+    </head>
+    <body>
+        <div>
+            <h1>Bookings</h1>
+                <ul>
+                    {% for booking in bookings %}
+                        <li>{{ booking.booked_by.username }}: {{ booking.reason }} ({{ booking.date }} - {{ booking.time }})</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'home:index' %}">&lt;&lt; Home</a>
+                <a href="{% url 'booking:add' %}">Book a visit</a>
+        </div>
+    </body>
+</html>
