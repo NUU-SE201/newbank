@@ -18,3 +18,7 @@ class CurrencyTests(TestCase):
     def test_amount_required(self):
         response = self.client.get('/currency/exchange_api/?from=USD&to=UZS')
         self.assertEqual(response.status_code, 400)
+
+    def test_invalid_amount(self):
+        response = self.client.get('/currency/exchange_api/?from=USD&to=UZS&amount=abc')
+        self.assertEqual(response.status_code, 400)
