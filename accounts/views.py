@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 # Create your views here.
-def my_account(request, username):
-    user = User.objects.get(username=username)
-    return render(request, 'accounts/my_account.html', {'user': user})
+def my_account(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+    return render(request, 'accounts/my_account.html', {'user': request.user})
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('accounts:my_account', username=request.user.username)
+        return redirect('accounts:my_account')
     error_message = None
     if request.method == 'POST':
         username = request.POST['username']
@@ -18,7 +19,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user:
             auth_login(request, user)
-            return redirect('accounts:my_account', username=username)
+            return redirect('accounts:my_account')
         error_message = 'Invalid username or password'
     return render(request, 'accounts/login.html', {'error_message': error_message})
 
@@ -28,7 +29,7 @@ def logout(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('accounts:my_account', username=request.user.username)
+        return redirect('accounts:my_account')
     error_message = None
     if request.method == 'POST':
         username = request.POST['username']
@@ -36,11 +37,13 @@ def register(request):
         email = request.POST['email']
 
         if User.objects.filter(username=username).exists():
-            error_message = 'Username already exists'
+            #error_message = 'Username already exists'
+            error_message = 'Invalid credentials'
         elif User.objects.filter(email=email).exists():
-            error_message = 'Email already exists'
+            #error_message = 'Email already exists'
+            error_message = 'Invalid credentials'
         else:
             user = User.objects.create_user(username=username, password=password, email=email)
             auth_login(request, user)
-            return redirect('accounts:my_account', username=username)
+            return redirect('accounts:my_account')
     return render(request, 'accounts/register.html', {'error_message': error_message})

@@ -22,6 +22,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('accounts/', include('accounts.urls')),
     path('booking/', include('booking.urls')),
-    path('cards/', include('cards.urls')),
-    path('currency/', include('currency.urls')),
+    path('api/', include('api.urls')),
 ]

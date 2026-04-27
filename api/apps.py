@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CardsConfig(AppConfig):
+class ApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'cards'
+    name = 'api'

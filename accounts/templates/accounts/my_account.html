@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>My Account</title>
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
-    </head>
+{% extends 'home/base.html' %}
+{% load static %}
 
-    <body>
-        <div>
-            <a href="{% url 'home:index' %}">&lt;&lt; Home</a><br><br>
-            <h1>Welcome, {{ user.username }}!</h1>
-            <p>Email: {{ user.email }}</p>
+{% block content %}
+    <div class="container">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <p>Email: {{ user.email }}</p>
 
-            <form method="post" action="{% url 'accounts:logout' %}">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-    </body>
-</html>
-    
+        <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+{% endblock %}

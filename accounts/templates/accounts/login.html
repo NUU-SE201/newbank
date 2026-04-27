@@ -1,35 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Login</title>
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
-    </head>
+<!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>NewBank</title>
 
-    <body>
+    {% load static %}
+    <link rel="icon" href="{% static 'home/nblogo.png' %}">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'accounts/bootstrap.min.css' %}" rel="stylesheet">
 
-        <div class="header">
-            <h1>Welcome to NewBank</h1>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'accounts/signin.css' %}" rel="stylesheet">
+  </head>
 
-            {% if error_message %}
-                <p style="color: red;">{{ error_message }}</p>
-            {% endif %}
+  <body class="text-center">
+    <form class="form-signin" method="post" action="{% url 'accounts:login' %}">
+      {% csrf_token %}
+      <img class="mb-4" src="{% static 'home/nblogo.png' %}" alt="" width="72">
+      <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
+      <br>
+      
+      {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+        <br>
+      {% endif %}
 
-            <form method="post" action="{% url 'accounts:login' %}">
-                {% csrf_token %}
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <br><br>
+      <label for="inputUsername" class="sr-only">Username</label>
+      <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+      <br>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <br><br>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="">
+      <br>
+      
+      <p>Don't have an account?<a href="{% url 'accounts:register' %}"> Register here</a></p>
+      <br>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+      <p class="mt-5 mb-3 text-muted">Copyright © 2026 NewBank</p>
+    </form>
 
-                <button type="submit" style="width: 220px;">Login</button>
-            </form>
-            <p>Don't have an account?
-                <a href="{% url 'accounts:register' %}">Register here</a>
-            </p>
-        </div>
-    </body>
-</html>
+
+</body></html>
