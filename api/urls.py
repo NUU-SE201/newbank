@@ -8,4 +8,5 @@ urlpatterns = [
     path(f'{version}/auth/login', rest_views.obtain_auth_token, name='login'),
     path(f'{version}/auth/register', views.register, name='register'),
     path(f'{version}/booking', views.booking, name='booking'),
+    path(f'{version}/transfers', views.transfer, name='history'),
 ]

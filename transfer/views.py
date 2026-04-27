@@ -28,12 +28,13 @@ def transfer(request):
         if float(amount) < 100:
             error_message = "The minimum transfer amount is 100."
             return render(request, 'transfer/transfer.html', {'error_message': error_message})
-        
         current_user = request.user
+        if current_user.email == to_user:
+            error_message = "You cannot transfer money to yourself."
+            return render(request, 'transfer/transfer.html', {'error_message': error_message})
         if current_user.balance < float(amount):
             error_message = "Insufficient balance."
             return render(request, 'transfer/transfer.html', {'error_message': error_message})
-
         try:
             to_user = Account.objects.get(email=to_user)
         except Account.DoesNotExist:
