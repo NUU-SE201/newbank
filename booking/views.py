@@ -18,8 +18,9 @@ def add(request):
         reason = request.POST['reason']
         date = request.POST['date']
         time = request.POST['time']
+        datetime_str = f"{date} {time}"
         user = request.user
-        booking = Booking(reason=reason, date=date, time=time, booked_by=user)
+        booking = Booking(reason=reason, date=datetime_str, booked_by=user)
         booking.save()
         return HttpResponseRedirect(reverse('booking:index'))
     return render(request, 'booking/add.html')

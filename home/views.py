@@ -6,4 +6,4 @@ def index(request):
     return render(request, 'home/index.html', {'user': user})
 
 def cards(request):
-    return render(request, 'home/cards.html')
+    return render(request, 'home/index.html')

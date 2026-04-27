@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'accounts',
     'booking',
     'api',
+    'transfer',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.admin',
@@ -74,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'newbank.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -84,6 +84,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 
 # Password validation

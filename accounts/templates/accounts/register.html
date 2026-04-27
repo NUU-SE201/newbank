@@ -23,8 +23,9 @@
       <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
       
       {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-        <br>
+          <div class="alert alert-danger" role="alert">
+              {{ error_message }}
+          </div>
       {% endif %}
 
       <label for="inputUsername" class="sr-only">Username</label>

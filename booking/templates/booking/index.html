@@ -1,20 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Bookings</title>
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'booking/styles.css' %}">
-    </head>
-    <body>
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
         <div>
-            <h1>Bookings</h1>
+            <h1>My bookings</h1>
                 <ul>
                     {% for booking in bookings %}
                         <li>{{ booking.booked_by.username }}: {{ booking.reason }} ({{ booking.date }} - {{ booking.time }})</li>
                     {% endfor %}
                 </ul>
-                <a href="{% url 'home:index' %}">&lt;&lt; Home</a>
-                <a href="{% url 'booking:add' %}">Book a visit</a>
+
+                {% if not bookings %}
+                    <p>No bookings found.</p>
+                {% endif %}
+                <a class="btn btn-outline-primary" href="{% url 'booking:add' %}">Book a visit</a>
         </div>
-    </body>
-</html>
+    </div>
+{% endblock %}
